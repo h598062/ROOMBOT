@@ -59,7 +59,7 @@ public class Utils {
 		System.out.println("Gi et gyldig romnummer:");
 		return rom(romMap);
 	}
-	public static String getDate() {
+	public static String getDateID() {
 		String dateID = "";
 		LocalDate date = LocalDate.now();
 		dateID+=date.getYear();
@@ -67,6 +67,14 @@ public class Utils {
 		dateID+=date.getDayOfMonth()+3;
 		System.out.println("booking for value: "+dateID);
 		return dateID;
+	}
+	public static String formateDateString() {
+		String dateString = "";
+		LocalDate currDate = LocalDate.now();
+		dateString+=currDate.getYear()+"-";
+		dateString+=currDate.getMonthValue()+"-";
+		dateString+=currDate.getDayOfMonth();
+		return dateString;
 	}
 	
 }

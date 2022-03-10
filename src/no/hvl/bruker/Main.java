@@ -1,34 +1,38 @@
 package no.hvl.bruker;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
-
-import no.hvl.bruker.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.time.LocalDate;
 
 public class Main {
-
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+		Date date=null;
+	    Timer timer = new Timer();
+		String dateString = Utils.formateDateString();
+	    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    
+	    //data fra bruker
 		String user = Utils.loginBruker();
 		String passord = Utils.loginPassord();
 		String rom = Utils.rom(Utils.mapper());
 		String startTid = Utils.tidStart();
 		String sluttTid = Utils.tidSlutt();
-		String dato = Utils.getNextDate();
-		
-		System.out.print("Starter ROOMBOT... \n type 'exit' to terminate");
-		boolean exit = false;
-		while(!exit) {
-			if() {//når klokka er 22:00
-				//kjør python program
-			}
-			if(sc.nextLine().equals("exit")) {
-				break;
-			}
-			Thread.sleep(10*1000);
-			
-		}
-		System.out.println("ROOMBOT SUCECCFULLY TERMINATED");
-		sc.close();
-	}
+		String dateID = Utils.getDateID();
 
+
+		System.out.print("Starter ROOMBOT... ");
+		
+	    try {
+			date = dateFormatter.parse(dateString+" 02:30:"+((int)(Math.random()*40)+15));
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+	    
+		timer.schedule(new TimedTask(dateID, startTid, sluttTid, rom, user, passord), date);
+	}
 }
