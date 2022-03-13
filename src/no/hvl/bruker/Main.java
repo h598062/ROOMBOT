@@ -25,8 +25,9 @@ public class Main {
 		String dateID = Utils.getDateID();
 
 
-		System.out.print("Starter ROOMBOT... ");
+		System.out.println("Starting ROOMBOT... ");
 		
+		System.out.println("Booking room for: "+dateID+"::"+startTid+"-"+sluttTid+" at "+rom+"for user "+user+":"+passord);
 	    try {
 			date = dateFormatter.parse(dateString+" 22:00:"+((int)(Math.random()*40)+15));
 		} catch (ParseException e1) {

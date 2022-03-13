@@ -23,12 +23,8 @@ public class TimedTask extends TimerTask {
 	@Override
 	public void run() {
 
-		try {
-			Process p = Runtime.getRuntime().exec("BookScripty.py " + dateID + " " + startTid + " " + sluttTid + " "
-					+ rom + " " + user + " " + passord);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String dir = System.getProperty("user.dir");
+		ProcessBuilder pb = new ProcessBuilder("python", dir + "\\noe\\BookScript.py", "20220314", "20:00", "21:00", "4202", "591321", "Bergen2020");
 
 		System.out.println("ROOMBOT TERMINATING ...");
 	}

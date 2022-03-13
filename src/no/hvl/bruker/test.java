@@ -5,14 +5,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.Timer;
 
 public class test {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		String dir = System.getProperty("user.dir");
-		ProcessBuilder pb = new ProcessBuilder("python", dir + "\\BookScript.py", "20220314", "20:00", "21:00", "4202", "591321", "Bergen2020");
-
+		ProcessBuilder pb = new ProcessBuilder("python", dir + "\\noe\\BookScript.py", "20220314", "20:00", "21:00", "4202", "591321", "Bergen2020");
 
 		Process process = pb.start();
 		
@@ -21,10 +25,10 @@ public class test {
 
 		String lines=null;
 		while((lines=reader.readLine())!=null) {
-			System.out.println(": "+lines);
+			System.out.println("$ "+lines);
 		}
 		while((lines=readerError.readLine())!=null) {
-			System.out.println("err: "+lines);
+			System.out.println("err$ "+lines);
 		}
 		
 		System.out.println(dir);
@@ -46,10 +50,23 @@ public class test {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		
+		Date date=null;
+	    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    Timer timer = new Timer();
+		String dateString = Utils.formateDateString();
 
-			//pb.command("C:\\Users\\RetailAdmin\\Desktop\\java prosjekter\\ROOMBOT\\BookScript.py 20220313 20:00 21:00 4202 591321 Bergen2020");
-			//Process p = Runtime.getRuntime().exec(command);
 
+	    try {
+			date = dateFormatter.parse(dateString+" 22:43:00");
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+	    
+		timer.schedule(new TTTEST(), date);
+		Thread.sleep(3000);
+		timer.cancel();
 	}
 
 }
