@@ -1,6 +1,8 @@
 package no.hvl.bruker;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.TimerTask;
 
 public class TimedTask extends TimerTask {
@@ -24,8 +26,25 @@ public class TimedTask extends TimerTask {
 	public void run() {
 
 		String dir = System.getProperty("user.dir");
-		ProcessBuilder pb = new ProcessBuilder("python", dir + "\\noe\\BookScript.py", "20220314", "20:00", "21:00", "4202", "591321", "Bergen2020");
+		ProcessBuilder pb = new ProcessBuilder("python", dir + "\\BookScript.py", dateID, startTid, sluttTid, rom, user, passord);
+		
+		try {
+			Process process = pb.start();
+			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			BufferedReader readerError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
+			String lines=null;
+			while((lines=reader.readLine())!=null) {
+				System.out.println("ROOMBOT$ "+lines);
+			}
+			while((lines=readerError.readLine())!=null) {
+				System.out.println("err$ "+lines);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		System.out.println("ROOMBOT TERMINATING ...");
 	}
 

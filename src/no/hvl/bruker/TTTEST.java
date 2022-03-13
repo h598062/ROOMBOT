@@ -1,6 +1,5 @@
 package no.hvl.bruker;
 
-import java.io.IOException;
 import java.util.TimerTask;
 
 public class TTTEST extends TimerTask {

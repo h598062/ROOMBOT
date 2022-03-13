@@ -4,10 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.time.LocalDate;
 
 public class Main {
 	public static void main(String[] args) {
