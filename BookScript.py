@@ -44,7 +44,10 @@ def Book(date, tidStart, tidSlutt, romID, bruker, passord):
     session = requests.Session()
     responseFEIDE = session.get(urlLoginMedFeide)
     login(responseFEIDE.url, session, bruker, passord)
-    session.post(urlBook, data=payloadBook)
+    response = session.post(urlBook, data=payloadBook)
+
+    print("executed from python!")
+    print(response.text)
 
 
 if __name__ == "__main__":
