@@ -28,7 +28,7 @@ public class Main {
 		System.out.print("Starter ROOMBOT... ");
 		
 	    try {
-			date = dateFormatter.parse(dateString+" 02:30:"+((int)(Math.random()*40)+15));
+			date = dateFormatter.parse(dateString+" 22:00:"+((int)(Math.random()*40)+15));
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
