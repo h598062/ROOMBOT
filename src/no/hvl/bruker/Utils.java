@@ -47,7 +47,7 @@ public class Utils {
 		if (start.length() == 5) {
 			return start;
 		}
-		System.out.println("gi et gyldig tidspunkt på formatet (xx:xx)");
+		System.out.println("give a valid time in the format (xx:xx)");
 		return tidStart();
 	}
 
@@ -59,7 +59,7 @@ public class Utils {
 		if (slutt.length() == 5) {
 			return slutt;
 		}
-		System.out.println("Gi et gyldig tidspunkt på formatet ex. (13:00)");
+		System.out.println("give a valid time in the format (xx:xx)");
 		return tidSlutt();
 	}
 
