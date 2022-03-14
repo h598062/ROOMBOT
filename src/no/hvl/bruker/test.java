@@ -16,7 +16,7 @@ public class test {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		String dir = System.getProperty("user.dir");
-		ProcessBuilder pb = new ProcessBuilder("python3", dir + "/BookScript.py", "20220314", "20:00", "21:00", "4202", "591321", "Bergen2020");
+		ProcessBuilder pb = new ProcessBuilder("C:\\Users\\BirkJ\\AppData\\Local\\Microsoft\\WindowsApps\\python", dir + "\\BookScript.py", "20220314", "20:00", "21:00", "4202", "591321", "Bergen2020");
 
 		Process process = pb.start();
 		
