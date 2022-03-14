@@ -26,7 +26,7 @@ public class TimedTask extends TimerTask {
 	public void run() {
 
 		String dir = System.getProperty("user.dir");
-		ProcessBuilder pb = new ProcessBuilder("python", dir + "\\BookScript.py", dateID, startTid, sluttTid, rom, user, passord);
+		ProcessBuilder pb = new ProcessBuilder("python3", dir + "/BookScript.py", dateID, startTid, sluttTid, rom, user, passord);
 		
 		try {
 			Process process = pb.start();

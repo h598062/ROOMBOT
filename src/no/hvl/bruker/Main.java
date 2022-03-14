@@ -26,7 +26,7 @@ public class Main {
 		
 		System.out.println("Booking room for: "+dateID+"::"+startTid+"-"+sluttTid+" at "+rom+"for user "+user+":"+passord);
 	    try {
-			date = dateFormatter.parse(dateString+" 22:00:"+((int)(Math.random()*40)+15));
+			date = dateFormatter.parse(dateString+" 22:00:"+((int)(Math.random()*5)+10));
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
