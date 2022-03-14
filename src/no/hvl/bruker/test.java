@@ -33,41 +33,41 @@ public class test {
 		
 		System.out.println(dir);
 
-		
-		
-		
-		
-		
-		
-		
-		File file = new File("ROMKEY");
-
-		try {
-			Scanner sc = new Scanner(file);
-			while (sc.hasNextLine()) {
-			System.out.println(sc.nextLine());
-			sc.close();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		
-		Date date=null;
-	    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    Timer timer = new Timer();
-		String dateString = Utils.formateDateString();
-
-
-	    try {
-			date = dateFormatter.parse(dateString+" 22:43:00");
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-	    
-		timer.schedule(new TTTEST(), date);
-		Thread.sleep(3000);
-		timer.cancel();
+//		
+//		
+//		
+//		
+//		
+//		
+//		
+//		File file = new File("ROMKEY");
+//
+//		try {
+//			Scanner sc = new Scanner(file);
+//			while (sc.hasNextLine()) {
+//			System.out.println(sc.nextLine());
+//			sc.close();
+//			}
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		Date date=null;
+//	    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//	    Timer timer = new Timer();
+//		String dateString = Utils.formateDateString();
+//
+//
+//	    try {
+//			date = dateFormatter.parse(dateString+" 22:43:00");
+//		} catch (ParseException e1) {
+//			e1.printStackTrace();
+//		}
+//	    
+//		timer.schedule(new TTTEST(), date);
+//		Thread.sleep(3000);
+//		timer.cancel();
 	}
 
 }
