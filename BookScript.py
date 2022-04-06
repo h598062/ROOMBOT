@@ -48,21 +48,21 @@ def Book(date, tidStart, tidSlutt, romID, bruker, passord):
     response = session.post(urlBook, data=payloadBook)
 
     print("SUCCESSFULLY EXECUTED ROOMBOT")
-    if response.text.length<100:
+    if len(response.text)<100:
         print(response.text)
 
 def BookAt22(dato, tidStart, tidSlutt, romID, bruker, passord):
+    print("SCHEDULING ROOMBOT TO EXECUTE AT",datetime.date.today().strftime("%d-%m-%Y"),"22:00:01!")
     s = sched.scheduler(time.time, time.sleep)
     t = time.strptime(time.strftime("%Y-%m-%d")+' 22:00:01', '%Y-%m-%d %H:%M:%S')
     t = time.mktime(t)
-    print("SCHEDULING ROOMBOT FOR DATE: !",t)
     print("PLEASE WAIT.. YOU CAN MINIMIZE WINDOW")
     s.enterabs(t, 1, Book, (dato, tidStart, tidSlutt, romID, bruker, passord))
     s.run()
 
 def makeDate():
     today = datetime.date.today()
-    omTreDager = today + datetime.timedelta(days=3)
+    omTreDager = today + datetime.timedelta(days=2)
     return omTreDager.strftime("%Y%m%d")
 
 if __name__ == "__main__":
