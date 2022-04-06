@@ -47,7 +47,7 @@ def Book(date, tidStart, tidSlutt, romID, bruker, passord):
     login(responseFEIDE.url, session, bruker, passord)
     response = session.post(urlBook, data=payloadBook)
 
-    print("executed from python!")
+    print("SUCCESSFULLY EXECUTED ROOMBOT")
     if response.text.length<100:
         print(response.text)
 
@@ -55,6 +55,8 @@ def BookAt22(dato, tidStart, tidSlutt, romID, bruker, passord):
     s = sched.scheduler(time.time, time.sleep)
     t = time.strptime(time.strftime("%Y-%m-%d")+' 22:00:01', '%Y-%m-%d %H:%M:%S')
     t = time.mktime(t)
+    print("SCHEDULING ROOMBOT FOR DATE: !",t)
+    print("PLEASE WAIT.. YOU CAN MINIMIZE WINDOW")
     s.enterabs(t, 1, Book, (dato, tidStart, tidSlutt, romID, bruker, passord))
     s.run()
 
@@ -64,6 +66,7 @@ def makeDate():
     return omTreDager.strftime("%Y%m%d")
 
 if __name__ == "__main__":
+    print("STARTING ROOMBOT!")
     dato = makeDate() #'20220311'
     tidStart = sys.argv[1]#'20:00'
     tidSlutt = sys.argv[2]#'21:00'
