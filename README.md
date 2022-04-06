@@ -33,21 +33,32 @@ Som Dataingeniørstudent var det helt uaktuelt å synke så lavt å gjøre manue
 
 
 
-Denne løsningen har et Python script som tar av seg get/post requester på nettsiden ved bruk av requests objektet, og et overordnet java program som har en primitiv spørring og logikk ment for å kjøres i CMD/terminal vindu. (per Versjon 1.0) 
-All kode er bygd av meg uten inspirasjon fra andre kilder.
+Denne løsningen har et Python script som tar av seg get/post requester på nettsiden ved bruk av requests objektet, så bruker legger inn data som argument i cmd/terminal. Se håndbok. (per Versjon 1.0)\
+All kode er skrevet av meg uten inspirasjon fra andre kilder.
 
 
 Litt etikk..
 
-Har jeg lov til å gjøre dette?
-Per TimeEdit's regel om "manuiplering av bookingsystemet" Nei. Rent juridisk? Ja. (Bruk på eget ansvar)
+Har jeg lov til å gjøre dette?\
+Per TimeEdit's regel om "manuiplering av bookingsystemet"? - Nei.\
+Rent juridisk? - Ja. (Bruk på eget ansvar, du kan bli utestengt)
 
-Er det taktisk riktig eller lurt, på kort eller lang sikt?
+Er det taktisk riktig eller lurt, på kort eller lang sikt?\
 Ja.
 
-Kan jeg leve med meg selv etterpå?
+Kan jeg leve med meg selv etterpå?\
 Ja.
 
+Brukerhåndbok!\
+1.Du trenger python med requests\
+2.Bestem hvilket rom (du må se ROMKEY.txt) og tidspunkt (maks 3 timer)\
+3.åpne terminal/CMD, naviger dit du lagret ROOMBOT prosjektet og lim inn:
+
+     python BookScript.py tidStart tidSlutt romID feideBrukernavn feidePassord
+
+et mer spesifikt eksempel:
+
+     python BookScript.py 12:00 15:00 4202 123456 pass
 
 
 Oppgradering av dette prosjektet ville vært å lage webtjener med tråder for multiclient handling, pålogging system for å begrense tilgang til scriptet og flytting av data til database. Dette for å så distribuere tilgang til mine venner.
