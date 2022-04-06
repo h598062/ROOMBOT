@@ -62,7 +62,7 @@ def BookAt22(dato, tidStart, tidSlutt, romID, bruker, passord):
 
 def makeDate():
     today = datetime.date.today()
-    omTreDager = today + datetime.timedelta(days=2)
+    omTreDager = today + datetime.timedelta(days=3)
     return omTreDager.strftime("%Y%m%d")
 
 if __name__ == "__main__":
