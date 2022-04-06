@@ -1,6 +1,8 @@
 
-import requests
+import pip._vendor.requests as requests
 import sys
+import datetime
+import sched, time
 
 
 def login(urlLogin, session, bruker, passord):
@@ -46,16 +48,26 @@ def Book(date, tidStart, tidSlutt, romID, bruker, passord):
     response = session.post(urlBook, data=payloadBook)
 
     print("executed from python!")
-    print(response.text)
+    if response.text.length<100:
+        print(response.text)
 
+def BookAt22(dato, tidStart, tidSlutt, romID, bruker, passord):
+    s = sched.scheduler(time.time, time.sleep)
+    t = time.strptime(time.strftime("%Y-%m-%d")+' 22:00:01', '%Y-%m-%d %H:%M:%S')
+    t = time.mktime(t)
+    s.enterabs(t, 1, Book, (dato, tidStart, tidSlutt, romID, bruker, passord))
+    s.run()
+
+def makeDate():
+    today = datetime.date.today()
+    omTreDager = today + datetime.timedelta(days=3)
+    return omTreDager.strftime("%Y%m%d")
 
 if __name__ == "__main__":
-
-    dato = sys.argv[1]#'20220311'
-    tidStart = sys.argv[2]#'20:00'
-    tidSlutt = sys.argv[3]#'21:00'
-    romID = sys.argv[4]#'4202'
-    bruker = sys.argv[5]
-    passord = sys.argv[6]
-
-    Book(dato, tidStart, tidSlutt, romID, bruker, passord)
+    dato = makeDate() #'20220311'
+    tidStart = sys.argv[1]#'20:00'
+    tidSlutt = sys.argv[2]#'21:00'
+    romID = sys.argv[3]#'4202'
+    bruker = sys.argv[4]
+    passord = sys.argv[5]
+    BookAt22(dato, tidStart, tidSlutt, romID, bruker, passord)
