@@ -10,19 +10,7 @@
 
 En løsning på å automatisk booke grupperom på HVL!
 
-                      Versjon: 
-                     ___      ____ 
-                   <  /     / __ \
-                   / /     / / / /
-                  / /   _ / /_/ / 
-                 /_/   (_)\____/   
-
-Det har vist seg at mange studenter på HVL løser grupperombookingen på HVL ved å ha alarm på klokka 22:00, da websiden åpner for booking 3 dager frem i tid. Dette for å raskest mulig å kunne booke seg et rom så man har et sted å arbeide med venner.
-
-Som Dataingeniørstudent var det helt uaktuelt å synke så lavt å gjøre manuelt arbeid. Så da er løsningen et script som booker et rom jeg vil ha med maskinpresisjon før alle andre.
-
-Denne løsningen har et Python script som tar av seg get/post requester på nettsiden ved bruk av requests objektet, så bruker legger inn data som argument i cmd/terminal. Se håndbok. (per Versjon 1.0)\
-All kode er skrevet av meg uten inspirasjon fra andre kilder.
+Denne løsningen har et Python script som tar av seg get/post requester på nettsiden ved bruk av requests objektet, så bruker legger inn data som argument i cmd/terminal.
 
 Litt etikk..
 
@@ -41,14 +29,9 @@ Brukerhåndbok!\
 2.Bestem hvilket rom (du må se ROMKEY.txt) og tidspunkt (maks 3 timer)\
 3.åpne terminal/CMD, naviger dit du lagret ROOMBOT prosjektet og lim inn:
 
-    python BookScript.py tidStart tidSlutt (romID eller romnummer) (valgrfritt, antall dager fram, fra 1 til og med 3, default 3 om ikke spesifisert)
+    python BookScript.py -h
 
-et mer spesifikt eksempel:
+Skriptet vil så printe ut i terminal info og eksempler for bruk
 
-	python BookScript.py 12:00 15:00 B105
 
-	python BookScript.py 12:00 15:00 4187 2
-
-Oppgradering av dette prosjektet ville vært å lage webtjener med tråder for multiclient handling, pålogging system for å begrense tilgang til scriptet og flytting av data til database. Dette for å så distribuere tilgang til mine venner.
-
-Laget av Birk Johannessen, forbedret av Bjørnar
+Orginalt laget av Birk Johannessen, omskrevet av Bjørnar
