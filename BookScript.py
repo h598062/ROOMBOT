@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 # TODO omskriv funksjoner slik at de bruker date, time og datetime objekter for å forenkle kode og unngå altfor mye konvertering
 
-def login(urlLogin, session:requests.Session, bruker, passord):
+def login(urlLogin:str, session:requests.Session, bruker:str, passord:str):
 
     urlSSO = "https://cloud.timeedit.net/hvl/web/timeedit/ssoResponse"
     payload = {
@@ -34,7 +34,7 @@ def login(urlLogin, session:requests.Session, bruker, passord):
     print(res)
 
 
-def BookRom(date, tidStart, tidSlutt, romID, bruker, passord, email):
+def BookRom(date:str, tidStart:str, tidSlutt:str, romID:str, bruker:str, passord:str, email:str):
     urlLoginMedFeide = "https://cloud.timeedit.net/hvl/web/timeedit/sso/feide?back=https%3A%2F%2Fcloud.timeedit.net%2Fhvl%2Fweb%2Fstudbergen%2F"
     urlBook = "https://cloud.timeedit.net/hvl/web/studbergen/ri1Q9.html"
     payloadBook = {
@@ -100,8 +100,8 @@ def BookIdagAt22(romDato:str, tidStart:str, tidSlutt:str, romID:int, bruker:str,
     t = time.strptime(time.strftime("%Y-%m-%d")+' 22:00:01', '%Y-%m-%d %H:%M:%S')
     t = time.mktime(t)
     print(t)
-    #s.enterabs(t, 1, BookRom, (romDato, tidStart, tidSlutt, romID, bruker, passord, email))
-    #s.run()
+    s.enterabs(t, 1, BookRom, (romDato, tidStart, tidSlutt, romID, bruker, passord, email))
+    s.run()
 
 # TODO kombiner begge booking funksjonene
 def BookAtDateAt22(romDato:str, tidStart:str, tidSlutt:str, romID:int, bruker:str, passord:str, email:str, bookingDato:datetime.date):
@@ -122,17 +122,18 @@ def BookAtDateAt22(romDato:str, tidStart:str, tidSlutt:str, romID:int, bruker:st
     delta = bookingDato - today_obj
     print(delta.days)
     if delta.days == 0:
-        #BookIdagAt22(romDato, tidStart, tidSlutt, romID, bruker, passord, email)
+        BookIdagAt22(romDato, tidStart, tidSlutt, romID, bruker, passord, email)
         print()
     elif delta.days < 0:
-        #BookRom(romDato, tidStart, tidSlutt, romID, bruker, passord, email)
+        BookRom(romDato, tidStart, tidSlutt, romID, bruker, passord, email)
         print()
     else:
         s = sched.scheduler(time.time, time.sleep)
         dt = datetime.datetime.combine(bookingDato, datetime.time(hour=22, minute=0, second=1))
-        print(time.mktime(dt.timetuple()))
-        #s.enterabs(t, 1, BookRom, (romDato, tidStart, tidSlutt, romID, bruker, passord, email))
-        #s.run()
+        t = time.mktime(dt.timetuple())
+        print(t)
+        s.enterabs(t, 1, BookRom, (romDato, tidStart, tidSlutt, romID, bruker, passord, email))
+        s.run()
 
 def makeDate() -> str:
     """lager en dato 3 dager fram i tid
@@ -163,7 +164,7 @@ def makeBookingDate(romDato:str) -> datetime.date:
     bookingDate = datetime.date(romDato_obj.year, romDato_obj.month, romDato_obj.day-3)
     return bookingDate
 
-def convertRomnr(rom:str) -> int:
+def convertRomnr(rom:str) -> str:
     """konverterer rom navn gitt som argument til romid
 
     Args:
@@ -181,10 +182,10 @@ def convertRomnr(rom:str) -> int:
     
     if rom.isnumeric():
         if rom in romdata.values():
-            return int(rom)
+            return rom
     else:
         if rom in romdata:
-            return int(romdata[rom])
+            return romdata[rom]
 
     print(f"Oppgitt rom navn eller romID {rom} finnes ikke i ROMKEY.csv. Dobbeltsjekk input som ble brukt med scriptet")
     sys.exit(1)
