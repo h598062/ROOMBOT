@@ -1,0 +1,20 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "Node 18",
+
+	"compilerOptions": {
+		"lib": ["ES2021"],
+		"module": "commonjs",
+		"target": "ES2021",
+
+		"outDir": "out",
+		"typeRoots": ["./node_modules/@types"],
+
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "node",
+		"sourceMap": true
+	}
+}

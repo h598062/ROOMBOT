@@ -1,3 +1,12 @@
+# typescript output folder
+out
+
+# ignore node modules
+node_modules/
+
+# ikke lagre noen env filer da de inneholder passord etc
 *.env
+
+# debug log filer
 debug.txt
 out.txt

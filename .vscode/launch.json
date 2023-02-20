@@ -1,44 +1,72 @@
 {
-	// Use IntelliSense to learn about possible attributes.
-	// Hover to view descriptions of existing attributes.
-	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"name": "Start uten dato",
-			"type": "python",
-			"request": "launch",
-			"program": "${file}",
-			"console": "internalConsole",
-			"justMyCode": true,
-			"args": ["-r", "B109", "-s 11:00", "-e 12:00"]
-		},
-		{
-			"name": "Start med dato",
-			"type": "python",
-			"request": "launch",
-			"program": "${file}",
-			"console": "internalConsole",
-			"justMyCode": true,
-			"args": ["-r", "B109", "-s", "11:00", "-e", "12:00", "--dato=20230224"]
-		},
-		{
-			"name": "Start be om hjelp",
-			"type": "python",
-			"request": "launch",
-			"program": "${file}",
-			"console": "internalConsole",
-			"justMyCode": true,
-			"args": ["-h"]
-		},
-		{
-			"name": "Start uten argumenter",
-			"type": "python",
-			"request": "launch",
-			"program": "${file}",
-			"console": "internalConsole",
-			"justMyCode": true,
-			"args": []
-		}
-	]
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Start python uten dato",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "internalConsole",
+            "justMyCode": true,
+            "args": ["-r", "B109", "-s 11:00", "-e 12:00"]
+        },
+        {
+            "name": "Start python med dato",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "internalConsole",
+            "justMyCode": true,
+            "args": [
+                "-r",
+                "B109",
+                "-s",
+                "11:00",
+                "-e",
+                "12:00",
+                "--dato=20230224"
+            ]
+        },
+        {
+            "name": "Start python be om hjelp",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "internalConsole",
+            "justMyCode": true,
+            "args": ["-h"]
+        },
+        {
+            "name": "Start python uten argumenter",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "internalConsole",
+            "justMyCode": true,
+            "args": []
+        },
+        {
+            "name": "Start discord bot",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/index.ts",
+            "preLaunchTask": "tsc: build - tsconfig.json",
+            "outFiles": [
+                "${workspaceFolder}/out/${fileBasenameNoExtension}.js"
+            ],
+            "console": "internalConsole"
+        },
+        {
+            "name": "Deploy discord bot commands",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/deploy.ts",
+            "preLaunchTask": "tsc: build - tsconfig.json",
+            "outFiles": ["${workspaceFolder}/out/**/*.js"],
+            "console": "internalConsole"
+        }
+    ]
 }

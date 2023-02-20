@@ -1,0 +1,31 @@
+{
+    "name": "roombot",
+    "version": "1.0.0",
+    "description": "________  ________  ________  _____ ______   ________  ________  _________        |\\   __  \\|\\   __  \\|\\   __  \\|\\   _ \\  _   \\|\\   __  \\|\\   __  \\|\\___   ___\\      \\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\\\\\__\\ \\  \\ \\  \\|\\ /\\ \\  \\|\\  \\|___ \\  \\_|       \\ \\   _  _\\ \\  \\\\\\  \\ \\  \\\\\\  \\ \\  \\\\|__| \\  \\ \\   __  \\ \\  \\\\\\  \\   \\ \\  \\         \\ \\  \\\\  \\\\ \\  \\\\\\  \\ \\  \\\\\\  \\ \\  \\    \\ \\  \\ \\  \\|\\  \\ \\  \\\\\\  \\   \\ \\  \\         \\ \\__\\\\ _\\\\ \\_______\\ \\_______\\ \\__\\    \\ \\__\\ \\_______\\ \\_______\\   \\ \\__\\         \\|__|\\|__|\\|_______|\\|_______|\\|__|     \\|__|\\|_______|\\|_______|    \\|__|",
+    "main": "index.js",
+    "scripts": {
+        "start": "node out/index.js",
+        "deploy": "node out/deploy.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/h598062/ROOMBOT.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/h598062/ROOMBOT/issues"
+    },
+    "homepage": "https://github.com/h598062/ROOMBOT#readme",
+    "devDependencies": {
+        "eslint": "^8.34.0",
+        "eslint-config-prettier": "^8.6.0",
+        "prettier": "^2.7.1",
+        "typescript": "^4.5.4"
+    },
+    "dependencies": {
+        "discord.js": "^14.7.1",
+        "dotenv": "^16.0.3"
+    }
+}
