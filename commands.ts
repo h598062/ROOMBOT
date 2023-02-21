@@ -7,6 +7,8 @@ import {
     Collection,
     range,
     RepliableInteraction,
+    CommandInteraction,
+    ChatInputCommandInteraction,
 } from "discord.js";
 
 import * as fs from "fs";
@@ -106,7 +108,7 @@ const bookCommand: customCommand = {
                 .setDescription("Velg minutt, kun hvert 15. min er mulig")
                 .setRequired(true)
                 .setMaxValue(45)
-                .setMinValue(15)
+                .setMinValue(0)
                 //.setAutocomplete(true)
                 .addChoices(
                     { name: "00", value: 0 },
@@ -136,33 +138,24 @@ const bookCommand: customCommand = {
                         romnr.plasser === plasser
                 )
                 .map((obj) => obj.navn);
-            await interaction.respond(
-                filtered
-                    .map((romnr) => ({ name: romnr, value: romnr }))
-                    .slice(0, 25)
-            );
-            /* } else if (focusedOption.name === "starthr") {
-            const starthrs = range(8, 21).map((num) => num.toString());
-            const filtered = starthrs.filter((hr) =>
-                hr.startsWith(focusedOption.value)
-            );
-            await interaction.respond(
-                filtered.map((hr) => ({ name: hr, value: hr })).slice(0, 25)
-            );
-        } else if (focusedOption.name === "startmin") {
-            const startmins = ["00", "15", "30", "45"];
-            await interaction.respond(
-                startmins
-                    .map((mins) => ({ name: mins, value: mins }))
-                    .slice(0, 25)
-            ); */
+            let response = filtered.map((romnr) => ({
+                name: romnr,
+                value: romnr,
+            }));
+            if (response.length > 25) {
+                response = response.slice(0, 25);
+                response[0].name =
+                    "Kan ikke vise alle muligheter, prøv å skrive inn første bokstav: A B C D E F G J K L M";
+            }
+            await interaction.respond(response);
         } else if (focusedOption.name === "sluttid") {
             const starthr = interaction.options.getInteger("starthr", true);
             const startmin = interaction.options.getInteger("startmin", true);
             const possiblehrs = range(starthr, starthr + 3);
             const mulige = possiblehrs
                 .map((hr) => {
-                    const s = hr.toString();
+                    let s = hr.toString();
+                    s = s.length > 1 ? s : "0" + s;
                     const sa = [];
                     if (hr !== starthr + 3 && hr !== starthr) {
                         sa.push(s + ":00", s + ":15", s + ":30", s + ":45");
@@ -193,9 +186,32 @@ const bookCommand: customCommand = {
         }
     },
     execute: async (interaction: Interaction) => {
-        if (interaction.isRepliable()) {
-            interaction.reply("eg e for dum, klarer ikkje gjøre nokke enno 😣");
-        }
+        if (!(interaction instanceof ChatInputCommandInteraction)) return;
+        interaction.reply({
+            content: "eg e for dum, klarer ikkje gjøre nokke enno 😣",
+            ephemeral: true,
+        });
+        console.log(
+            interaction.options.getInteger("plasser"),
+            interaction.options.getString("romnr"),
+            interaction.options.getInteger("starthr"),
+            interaction.options.getInteger("startmin"),
+            interaction.options.getString("sluttid")
+        );
+        let hr = "" + interaction.options.getInteger("starthr");
+        hr = hr.length > 1 ? hr : "0" + hr;
+        let min = "" + interaction.options.getInteger("startmin");
+        min = min.length > 1 ? min : "0" + min;
+        const argstr =
+            "-r " +
+            interaction.options.getString("romnr") +
+            " -s " +
+            hr +
+            ":" +
+            min +
+            " -e " +
+            interaction.options.getString("sluttid");
+        console.log(argstr);
     },
 };
 

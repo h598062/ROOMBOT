@@ -177,8 +177,8 @@ def convertRomnr(rom:str) -> str:
     with open("./ROMKEY.csv", "r") as f:
         romdata = {}
         for line in f:
-            key, value = line.strip().split(',')
-            romdata[key] = value
+            romnavn, romid, plasser = line.strip().split(',')
+            romdata[romnavn] = romid
     
     if rom.isnumeric():
         if rom in romdata.values():
