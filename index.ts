@@ -18,7 +18,7 @@ const envVars = dotenv.config({ path: "./bot.env" });
 if (envVars.parsed === undefined) {
     console.error(".env file not found");
     const envstr = "DISCORD_TOKEN=\nBOT_ID=\nGUILD_ID=\n";
-    fs.writeFile("bot.env", envstr, (err) => {
+    fs.writeFile("./bot.env", envstr, (err) => {
         if (err) throw err;
     });
     console.log("Opprettet en bot.env fil som må fylles ut");

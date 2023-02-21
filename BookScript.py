@@ -16,9 +16,9 @@ def login(urlLogin:str, session:requests.Session, bruker:str, passord:str):
     }
 
     responseTE = session.post(urlLogin, data=payload)
-    #print("#### Login connect Response")
-    #print(responseTE.request)
-    #print(responseTE.text)
+    #vprint("#### Login connect Response")
+    #vprint(responseTE.request)
+    #vprint(responseTE.text)
     SAMLResponse = responseTE.text
     regex_pattern = r'name="SAMLResponse" value="([A-Za-z0-9+]+)"'
     matchedSAMLResponse = re.search(regex_pattern, SAMLResponse)
@@ -28,10 +28,10 @@ def login(urlLogin:str, session:requests.Session, bruker:str, passord:str):
     }
 
     res = session.post(urlSSO, data=payloadSSOResponse)
-    print("#### Login attempt response")
-    #print(res.request)
-    #print(res.text)
-    print(res)
+    vprint("#### Login attempt response")
+    #vprint(res.request)
+    #vprint(res.text)
+    vprint(res)
 
 
 def BookRom(date:str, tidStart:str, tidSlutt:str, romID:str, bruker:str, passord:str, email:str):
@@ -49,22 +49,22 @@ def BookRom(date:str, tidStart:str, tidSlutt:str, romID:str, bruker:str, passord
         'url': 'https://cloud.timeedit.net/hvl/web/studbergen/ri1Q9.html#00' + romID,
         'fe3': ''
     }
-    #print("#### Payload book")
-    #print(payloadBook)
+    #vprint("#### Payload book")
+    #vprint(payloadBook)
 
     session = requests.Session()
     responseFEIDE = session.get(urlLoginMedFeide)
     login(responseFEIDE.url, session, bruker, passord)
     response = session.post(urlBook, data=payloadBook)
 
-    print("#### Booking response")
-    print(response)
+    vprint("#### Booking response")
+    vprint(response)
 
     if email is not None and response.status_code == 200:
         match = re.search(r"id=(\d+)", response.url)
         if match:
             bookingID = match.group(1)
-            print(bookingID)
+            vprint(bookingID)
         
         payloadEmail = {
             'id': bookingID,
@@ -75,10 +75,10 @@ def BookRom(date:str, tidStart:str, tidSlutt:str, romID:str, bruker:str, passord
             'msg': "Følgende reservasjon ble gjort i TimeEdit"
         }
         responseEmail = session.post(response.url, data=payloadEmail)
-        print(responseEmail.status_code)
+        vprint(responseEmail.status_code)
 
     
-    #print(response.text)
+    #vprint(response.text)
 
 # TODO kombiner begge booking funksjonene
 def BookIdagAt22(romDato:str, tidStart:str, tidSlutt:str, romID:int, bruker:str, passord:str, email:str):
@@ -93,13 +93,13 @@ def BookIdagAt22(romDato:str, tidStart:str, tidSlutt:str, romID:int, bruker:str,
         passord (str): Passordet til person som skal booke rom
         email (str): Eposten til person som skal booke rom
     """    
-    print("Booker oppgitt rom: ",datetime.date.today().strftime("%d-%m-%Y"),"22:00:01!")
+    vprint(f"Booker et rom {romDato} i kveld ",datetime.date.today().strftime("%d-%m-%Y"),"22:00:01!")
     s = sched.scheduler(time.time, time.sleep)
     
     # venter til kl er 22:00:01 samme dag. time.strftime() girr tilbake dato og resten legger til tidspunktet
     t = time.strptime(time.strftime("%Y-%m-%d")+' 22:00:01', '%Y-%m-%d %H:%M:%S')
     t = time.mktime(t)
-    print(t)
+    vprint(t)
     s.enterabs(t, 1, BookRom, (romDato, tidStart, tidSlutt, romID, bruker, passord, email))
     s.run()
 
@@ -117,21 +117,19 @@ def BookAtDateAt22(romDato:str, tidStart:str, tidSlutt:str, romID:int, bruker:st
         email (str): Eposten til person som skal booke rom
         bookingDato (datetime.date): dato objekt for datoen når bookingen må utføres
     """    
-    print(bookingDato.ctime())
+    vprint(bookingDato.ctime())
     today_obj = datetime.date.today()
     delta = bookingDato - today_obj
-    print(delta.days)
+    vprint(delta.days)
     if delta.days == 0:
         BookIdagAt22(romDato, tidStart, tidSlutt, romID, bruker, passord, email)
-        print()
     elif delta.days < 0:
         BookRom(romDato, tidStart, tidSlutt, romID, bruker, passord, email)
-        print()
     else:
         s = sched.scheduler(time.time, time.sleep)
         dt = datetime.datetime.combine(bookingDato, datetime.time(hour=22, minute=0, second=1))
         t = time.mktime(dt.timetuple())
-        print(t)
+        vprint(t)
         s.enterabs(t, 1, BookRom, (romDato, tidStart, tidSlutt, romID, bruker, passord, email))
         s.run()
 
@@ -160,7 +158,7 @@ def makeBookingDate(romDato:str) -> datetime.date:
         datetime.date: et dato objekt som holder datoen en tidligst kan booke rommet
     """    
     romDato_obj = datetime.datetime.strptime(romDato, '%Y%m%d').date()
-    print(romDato_obj.ctime())
+    vprint(romDato_obj.ctime())
     bookingDate = datetime.date(romDato_obj.year, romDato_obj.month, romDato_obj.day-3)
     return bookingDate
 
@@ -203,6 +201,7 @@ def usage():
     print("* -s, --start=START_TIDSPUNKT    Start tidspunkt. Format: HH:MM")
     print("* -e, --slutt=SLUTT_TIDSPUNKT    Slutt tidspunkt. Format: HH:MM")
     print("  -d, --dato                     En spesifikk dato det skal bookes, bestillingstidspunkt kalkuleres automatisk. Format: YYYYMMDD")
+    print("  -v, --verbose                  Skriver ut mer info underveis til stdout")
     print("      --env=ENV_FILEPATH         Hvilken .env fil som skal brukes, default er bare standard .env som scriptet oppretter for deg")
     print()
     print("Beskrivelse:")
@@ -220,6 +219,13 @@ def usage():
     print("  Med dato vil scriptet automatisk velge riktig dag for å bestille ved første mulighet")
     print("¤   BookScript.py -r B210 -s 11:00 -e 12:00 --dato=20230219")
 
+def vprint(*args, **kwargs):
+    """Wrapper for print(), sørger for at det kun printes hvis scriptet ble kjørt med -v eller --verbose flag
+    """    
+    if verbose:
+        print(args, kwargs)
+
+
 def main(argv):
     """main funksjon
 
@@ -228,12 +234,15 @@ def main(argv):
     """
 
     try:
-        opts, args = getopt.getopt(argv, "hr:s:e:d:", ["help", "rom=", "start=", "slutt=", "dato=", "env="])
+        opts, args = getopt.getopt(argv, "hr:s:e:d:v", ["help", "rom=", "start=", "slutt=", "dato=", "verbose", "env="])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
 
     rom = tidStart = tidSlutt = inputDato = envpath = None
+
+    global verbose
+    verbose = False
 
     for opt, arg in opts:
         if opt in ("-h", "--help"):
@@ -249,6 +258,8 @@ def main(argv):
             inputDato = arg # eks: 20230220
         elif opt == "--env":
             envpath = arg
+        elif opt in ("-v", "--verbose"):
+            verbose = True
 
     # TODO legg inn logikk for å sjekke at det ikke forsøkes å booke mer enn 3 timer, som er det meste en kan booke
 
@@ -276,7 +287,7 @@ def main(argv):
     if bruker is None or passord is None:
         sys.exit("ERROR: Brukernavn eller passord er ikke fylt ut i .env fil")
 
-    # print(bruker, passord, email)
+    # vprint(bruker, passord, email)
 
     if inputDato is None:
         dato = makeDate() # 20220311

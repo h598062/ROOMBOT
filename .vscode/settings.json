@@ -1,5 +1,6 @@
 {
-	"prettier.useTabs": true,
-	"prettier.tabWidth": 4,
-	"explorer.autoReveal": false
+    "prettier.useTabs": true,
+    "prettier.tabWidth": 4,
+    "explorer.autoReveal": false,
+    "python.analysis.typeCheckingMode": "off"
 }

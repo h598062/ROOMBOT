@@ -13,6 +13,8 @@ import {
 
 import * as fs from "fs";
 
+import { spawn } from "child_process";
+
 interface CustomSlashCommandBuilder
     extends Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> {}
 
@@ -212,8 +214,31 @@ const bookCommand: customCommand = {
             " -e " +
             interaction.options.getString("sluttid");
         console.log(argstr);
+        runBookingScript(argstr.split(" "));
     },
 };
+
+async function runBookingScript(args: string[]) {
+    const pythonProcess = spawn("py", ["./BookScript.py", ...args]);
+
+    pythonProcess.stdout.on("data", (data) => {
+        console.log(`Python script output: ${data}`);
+    });
+
+    pythonProcess.stderr.on("data", (data) => {
+        console.error(`Python script error: ${data}`);
+    });
+
+    pythonProcess.on("close", (code) => {
+        clearTimeout(timeout);
+        console.log(`Python script exited with code ${code}`);
+    });
+
+    const timeout = setTimeout(() => {
+        pythonProcess.kill();
+        console.log("Python process killed");
+    }, 180000);
+}
 
 const commandarr: customCommand[] = [];
 commandarr.push(pingCommand, bookCommand, simpleBook);
