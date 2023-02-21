@@ -1,7 +1,4 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -49,24 +46,20 @@
             "args": []
         },
         {
+            "type": "node-terminal",
             "name": "Start discord bot",
-            "type": "node",
             "request": "launch",
-            "program": "${workspaceFolder}/index.ts",
+            "command": "npm run start",
             "preLaunchTask": "tsc: build - tsconfig.json",
-            "outFiles": [
-                "${workspaceFolder}/out/${fileBasenameNoExtension}.js"
-            ],
-            "console": "internalConsole"
+            "cwd": "${workspaceFolder}"
         },
         {
+            "type": "node-terminal",
             "name": "Deploy discord bot commands",
-            "type": "node",
             "request": "launch",
-            "program": "${workspaceFolder}/deploy.ts",
+            "command": "npm run deploy",
             "preLaunchTask": "tsc: build - tsconfig.json",
-            "outFiles": ["${workspaceFolder}/out/**/*.js"],
-            "console": "internalConsole"
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

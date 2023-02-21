@@ -12,15 +12,7 @@ import {
 } from "discord.js";
 import dotenv from "dotenv";
 import * as fs from "fs";
-import { customCommand, pingCommand } from "./commands";
-
-class BetterClient extends Client {
-    commands: Collection<String, customCommand>;
-    constructor(options: ClientOptions) {
-        super(options);
-        this.commands = new Collection();
-    }
-}
+import { customCommand, commands } from "./commands";
 
 const envVars = dotenv.config({ path: "./bot.env" });
 if (envVars.parsed === undefined) {
@@ -49,7 +41,7 @@ if (envVars.parsed.GUILD_ID === undefined || envVars.parsed.GUILD_ID == "") {
 }
 
 // Create a new client instance
-const client = new BetterClient({
+const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessageReactions,
@@ -57,18 +49,17 @@ const client = new BetterClient({
     ],
 });
 
-client.commands.set(pingCommand.data.name, pingCommand);
-
 // When the client is ready, run this code (only once)
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, (c) => {
     console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
+// Slash command handling
 client.on(Events.InteractionCreate, async (interaction) => {
     console.log(interaction);
     if (!interaction.isChatInputCommand()) return;
-    const command = client.commands.get(interaction.commandName);
+    const command = commands.get(interaction.commandName);
     if (!command) {
         console.error(
             `No command matching ${interaction.commandName} was found.`
@@ -76,13 +67,38 @@ client.on(Events.InteractionCreate, async (interaction) => {
         return;
     }
     try {
-        command.execute(interaction);
+        await command.execute(interaction);
     } catch (error) {
         console.error(error);
         await interaction.reply({
             content: "There was an error while executing this command!",
             ephemeral: true,
         });
+    }
+});
+
+// Autocomplete handling
+client.on(Events.InteractionCreate, async (interaction) => {
+    if (!interaction.isAutocomplete()) return;
+    const command = commands.get(interaction.commandName);
+
+    if (!command) {
+        console.error(
+            `No command matching ${interaction.commandName} was found.`
+        );
+        return;
+    }
+
+    try {
+        if (command.autocomplete) {
+            await command.autocomplete(interaction);
+        } else {
+            console.error(
+                `Command ${interaction.commandName} is missing an autocomplete function`
+            );
+        }
+    } catch (error) {
+        console.error(error);
     }
 });
 

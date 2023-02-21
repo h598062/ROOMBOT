@@ -6,6 +6,7 @@
     "scripts": {
         "start": "node out/index.js",
         "deploy": "node out/deploy.js",
+        "build": "tsc",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
@@ -21,8 +22,8 @@
     "devDependencies": {
         "eslint": "^8.34.0",
         "eslint-config-prettier": "^8.6.0",
-        "prettier": "^2.7.1",
-        "typescript": "^4.5.4"
+        "prettier": "^2.8.4",
+        "typescript": "^4.9.5"
     },
     "dependencies": {
         "discord.js": "^14.7.1",
