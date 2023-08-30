@@ -26,11 +26,11 @@ def login(urlLogin:str, session:requests.Session, bruker:str, passord:str):
         'SAMLResponse': matchedSAMLResponse.group(1), # [681:13329],
         'RelayState': ''
     }
-
+    #vprint(payloadSSOResponse)
     res = session.post(urlSSO, data=payloadSSOResponse)
     vprint("#### Login attempt response")
-    #vprint(res.request)
-    #vprint(res.text)
+    vprint(res.request)
+    vprint(res.text)
     vprint(res)
 
 
@@ -57,8 +57,11 @@ def BookRom(date:str, tidStart:str, tidSlutt:str, romID:str, bruker:str, passord
     login(responseFEIDE.url, session, bruker, passord)
     response = session.post(urlBook, data=payloadBook)
 
+    vprint(session.cookies)
+
     vprint("#### Booking response")
     vprint(response)
+    vprint(response.text)
 
     if email is not None and response.status_code == 200:
         match = re.search(r"id=(\d+)", response.url)
